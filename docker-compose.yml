@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: reembolsos_api_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    command: sh -c "rm -f tmp/pids/server.pid && bin/rails server -b 0.0.0.0 -p 3000"
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: password
+      PORT: 3000
+      # DATABASE_URL: postgres://postgres:password@db/reembolsos_api_development
+      # RAILS_SECRET_KEY_BASE: ${RAILS_SECRET_KEY_BASE}
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+
+volumes:
+  dbdata:
+    driver: local
