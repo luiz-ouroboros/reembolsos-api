@@ -75,4 +75,6 @@ group :development do
   gem 'rubocop-performance', require: false
 end
 
-
+group :test do
+  gem 'rspec-json_matcher', '~> 0.2.0'
+end

@@ -1,0 +1,84 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run docker rspec line",
+      "type": "shell",
+      "command": "docker compose exec api rspec ${relativeFile}:${lineNumber}",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "run docker rspec file",
+      "type": "shell",
+      "command": "docker compose exec api rspec ${relativeFile}",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "run docker rspec all",
+      "type": "shell",
+      "command": "docker compose exec api rspec",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "run rspec line",
+      "type": "shell",
+      "command": "rspec ${relativeFile}:${lineNumber}",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "run rspec file",
+      "type": "shell",
+      "command": "rspec ${relativeFile}",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "run rspec all",
+      "type": "shell",
+      "command": "rspec",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "focus": true
+      }
+    }
+  ]
+}
+  
