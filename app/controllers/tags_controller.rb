@@ -1,45 +1,25 @@
-# app/controllers/tags_controller.rb
 class TagsController < ApplicationController
-  before_action :set_tag, only: [:show, :update, :destroy]
-
   def index
     @tags = Tag.all
     render json: { data: @tags }
   end
 
   def show
+    @tag = Tag.find(params.permit(:id)[:id])
     render json: @tag
   end
 
   def create
-    @tag = Tag.new(tag_params)
-    if @tag.save
-      render json: @tag, status: :created
-    else
-      render json: @tag.errors, status: :unprocessable_entity
-    end
+    process_usecase(Tags::Create) { |result|
+      render json: result[:tag], status: :created
+    }
   end
 
   def update
-    if @tag.update(tag_params)
-      render json: @tag
-    else
-      render json: @tag.errors, status: :unprocessable_entity
-    end
+    process_usecase(Tags::Update) { |result| render json: result[:tag] }
   end
 
   def destroy
-    @tag.destroy
-    head :no_content
-  end
-
-  private
-
-  def set_tag
-    @tag = Tag.find(params[:id])
-  end
-
-  def tag_params
-    params.permit(:name)
+    process_usecase(Tags::Destroy) { |_result| head :no_content }
   end
 end

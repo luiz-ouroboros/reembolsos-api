@@ -4,3 +4,19 @@ pt:
     datetime: !ruby/regexp '/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}\z/'
   errors:
     not_found: 'Não encontrado'
+    unauthorized: 'Não autorizado'
+    user:
+      email:
+        :unique: 'E-mail já cadastrado'
+    tag:
+      refund_request_association: 'Existem solicitações de reembolso associadas a esta tag'
+      name:
+        :unique: 'Tag já cadastrada'
+    supplier:
+      refund_request_association: 'Existem solicitações de reembolso associadas a esse fornecedor'
+      name:
+        :unique: 'Tag já cadastrada'
+    refund_request:
+      # refund_request_association: 'Existem solicitações de reembolso associadas a esse fornecedor'
+      name:
+        :unique: 'Tag já cadastrada'

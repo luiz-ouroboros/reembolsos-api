@@ -1,4 +1,3 @@
-version: '3'
 services:
   db:
     image: postgres
@@ -22,7 +21,6 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: password
       PORT: 3000
-      # DATABASE_URL: postgres://postgres:password@db/reembolsos_api_development
       # RAILS_SECRET_KEY_BASE: ${RAILS_SECRET_KEY_BASE}
     ports:
       - "3000:3000"

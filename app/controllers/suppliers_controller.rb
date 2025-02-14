@@ -1,44 +1,25 @@
 class SuppliersController < ApplicationController
-  before_action :set_supplier, only: [:show, :update, :destroy]
-
   def index
     @suppliers = Supplier.all
     render json: { data: @suppliers }
   end
 
   def show
+    @supplier = Supplier.find(params.permit(:id)[:id])
     render json: @supplier
   end
 
   def create
-    @supplier = Supplier.new(supplier_params)
-    if @supplier.save
-      render json: @supplier, status: :created
-    else
-      render json: @supplier.errors, status: :unprocessable_entity
-    end
+    process_usecase(Suppliers::Create) { |result|
+      render json: result[:supplier], status: :created
+    }
   end
 
   def update
-    if @supplier.update(supplier_params)
-      render json: @supplier
-    else
-      render json: @supplier.errors, status: :unprocessable_entity
-    end
+    process_usecase(Suppliers::Update) { |result| render json: result[:supplier] }
   end
 
   def destroy
-    @supplier.destroy
-    head :no_content
-  end
-
-  private
-
-  def set_supplier
-    @supplier = Supplier.find(params[:id])
-  end
-
-  def supplier_params
-    params.permit(:name)
+    process_usecase(Suppliers::Destroy) { |_result| head :no_content }
   end
 end

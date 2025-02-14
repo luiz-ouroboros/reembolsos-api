@@ -38,8 +38,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.before(:each, type: :controller) do
-    @default_user ||=  User.first || FactoryBot.create(:user)
-    sign_in @default_user
+    @admin_user ||=  User.admin.first || FactoryBot.create(:user, role: User::ADMIN_ROLE)
+    sign_in @admin_user
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

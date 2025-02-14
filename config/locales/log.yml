@@ -1,0 +1,20 @@
+pt:
+  log:
+    user:
+      create: 'criou o usuário %{email}'
+      update: 'atualizou o usuário %{email}'
+      destroy: 'excluiu o usuário %{email}'
+    tag:
+      create: 'criou a tag %{name}'
+      update: 'atualizou a tag %{name}'
+      destroy: 'excluiu a tag %{name}'
+    supplier:
+      create: 'criou o fornecedor %{name}'
+      update: 'atualizou o fornecedor %{name}'
+      destroy: 'excluiu o fornecedor %{name}'
+    refund_request:
+      create: 'criou a solicitação %{id}'
+      update: 'atualizou a solicitação %{id}'
+      update_invoice: 'atualizou a nota fiscal da solicitação %{id}'
+      update_receipt: 'atualizou a recibo da solicitação %{id}'
+      destroy: 'excluiu a solicitação %{id}'

@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :tag do
-    name { 'alimentação' }
+    name { Faker::Lorem.word.upcase }
+    created_by { Faker::Internet.email }
   end
 end

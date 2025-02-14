@@ -6,8 +6,12 @@ class Ability
   def initialize(user)
     return unless user
 
-    if user.role == 'admin'
-      can :manage, :all
+    can :manage, Tag
+    can :manage, Supplier
+    can :manage, RefundRequest
+
+    if user.admin?
+      can :manage, User
     end
   end
 end

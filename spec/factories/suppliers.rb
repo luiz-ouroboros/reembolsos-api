@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :supplier do
-    name { "MyString" }
-    created_by { nil }
+    name { Faker::Company.name.upcase }
+    created_by { Faker::Internet.email }
     updated_by { nil }
   end
 end
