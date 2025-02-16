@@ -1,4 +1,4 @@
-class SuppliersController < ApplicationController
+class SuppliersController < BaseController
   def index
     @suppliers = Supplier.all
     render json: { data: @suppliers }
