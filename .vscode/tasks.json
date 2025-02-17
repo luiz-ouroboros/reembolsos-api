@@ -4,7 +4,7 @@
     {
       "label": "run docker rspec line",
       "type": "shell",
-      "command": "docker compose exec api rspec ${relativeFile}:${lineNumber}",
+      "command": "docker compose exec api bin/rspec ${relativeFile}:${lineNumber}",
       "problemMatcher": [],
       "group": {
         "kind": "test",
@@ -17,7 +17,7 @@
     {
       "label": "run docker rspec file",
       "type": "shell",
-      "command": "docker compose exec api rspec ${relativeFile}",
+      "command": "docker compose exec api bin/rspec ${relativeFile}",
       "problemMatcher": [],
       "group": {
         "kind": "test",
@@ -30,7 +30,7 @@
     {
       "label": "run docker rspec all",
       "type": "shell",
-      "command": "docker compose exec api rspec",
+      "command": "docker compose exec api bin/rspec",
       "problemMatcher": [],
       "group": {
         "kind": "test",

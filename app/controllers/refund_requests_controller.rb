@@ -1,44 +1,27 @@
-class RefundRequestsController < ApplicationController
-  before_action :set_request, only: [:show, :update, :destroy]
-
+class RefundRequestsController < BaseController
   def index
-    @refund_requests = RefundRequest.all
-    render json: { data: @refund_requests }
+    process_usecase(RefundRequests::Get) { |result|
+      render json: result[:refund_requests], root: :data, adapter: :json
+    }
   end
 
   def show
-    render json: @refund_request
+    process_usecase(RefundRequests::Find) { |result|
+      render json: result[:refund_request], root: false
+    }
   end
 
   def create
-    @refund_request = RefundRequest.new(request_params)
-    if @refund_request.save
-      render json: @refund_request, status: :created
-    else
-      render json: @refund_request.errors, status: :unprocessable_entity
-    end
+    process_usecase(RefundRequests::Create) { |result|
+      render json: result[:refund_request], status: :created
+    }
   end
 
   def update
-    if @refund_request.update(request_params)
-      render json: @refund_request
-    else
-      render json: @refund_request.errors, status: :unprocessable_entity
-    end
+    process_usecase(RefundRequests::UpdateProcess) { |result| render json: result[:refund_request] }
   end
 
   def destroy
-    @refund_request.destroy
-    head :no_content
-  end
-
-  private
-
-  def set_request
-    @refund_request = RefundRequest.find(params[:id])
-  end
-
-  def request_params
-    params.permit(:description, :total, :paid_at, :status, :supplier_id, :requested_at, :approved_at, :reimpursed_at)
+    process_usecase(RefundRequests::Destroy) { |_result| head :no_content }
   end
 end

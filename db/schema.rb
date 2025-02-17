@@ -70,8 +70,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_142044) do
     t.string "status"
     t.string "updated_by"
     t.string "approved_by"
+    t.string "reproved_by"
     t.datetime "requested_at"
     t.datetime "approved_at"
+    t.datetime "reproved_at"
     t.datetime "reimpursed_at"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6

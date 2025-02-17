@@ -10,14 +10,22 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.secret_key_base
+    jwt.secret = ENV.fetch("SECRET_KEY_BASE")
+
+    jwt.dispatch_requests = [
+      ['POST', %r{^/login$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/logout$}]
+    ]
+    jwt.expiration_time = 30.day.to_i
   end
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '5a478d701eaccacb9466ae10ae04393a02ccafdf893fd25b942b96612f5d58c0423a5ff3aa2c7d90003b1c7a7746a947f9e2dda0128276d6f5f957d94197494f'
+  config.secret_key = ENV.fetch("SECRET_KEY_BASE") {'5a478d701eaccacb9466ae10ae04393a02ccafdf893fd25b942b96612f5d58c0423a5ff3aa2c7d90003b1c7a7746a947f9e2dda0128276d6f5f957d94197494f'}
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -160,7 +168,7 @@ Devise.setup do |config|
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
   # unconfirmed_email column, and copied to email column on successful confirmation.
-  config.reconfirmable = true
+  config.reconfirmable = false
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]

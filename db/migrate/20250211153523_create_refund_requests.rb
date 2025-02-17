@@ -7,8 +7,10 @@ class CreateRefundRequests < ActiveRecord::Migration[8.0]
       t.string :status
       t.string :updated_by
       t.string :approved_by
+      t.string :reproved_by
       t.datetime :requested_at
       t.datetime :approved_at
+      t.datetime :reproved_at
       t.datetime :reimpursed_at
 
       t.decimal :latitude, precision: 10, scale: 6

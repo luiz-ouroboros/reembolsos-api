@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres
@@ -9,9 +11,12 @@ services:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
+    networks:
+      - app-network
 
   api:
     build: .
+    env_file: .env
     command: sh -c "rm -f tmp/pids/server.pid && bin/rails server -b 0.0.0.0 -p 3000"
     depends_on:
       - db
@@ -20,13 +25,20 @@ services:
       DATABASE_HOST: db
       DATABASE_USER: postgres
       DATABASE_PASSWORD: password
+      # SECRET_KEY_BASE: ed36ef756dce7f29007e65764f7be4962e8529c4569b94425d8261bb85f9a5d229a71c6f8b389461630b7ea16bac2bf688f57332fc33e2df0d558774eb91a102
+      # RAILS_SECRET_KEY_BASE: ed36ef756dce7f29007e65764f7be4962e8529c4569b94425d8261bb85f9a5d229a71c6f8b389461630b7ea16bac2bf688f57332fc33e2df0d558774eb91a102
       PORT: 3000
-      # RAILS_SECRET_KEY_BASE: ${RAILS_SECRET_KEY_BASE}
     ports:
       - "3000:3000"
     volumes:
       - .:/app
+    networks:
+      - app-network
 
 volumes:
   dbdata:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge

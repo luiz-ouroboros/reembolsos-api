@@ -1,4 +1,11 @@
 pt:
+  refund_request:
+    status:
+      draft: 'Rascunho'
+      submitted: 'Enviado'
+      approved: 'Aprovado'
+      rejected: 'Rejeitado'
+      canceled: 'Cancelado'
   regexp:
     date: !ruby/regexp '/\A\d{4}-\d{2}-\d{2}\z/'
     datetime: !ruby/regexp '/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}\z/'
@@ -17,6 +24,11 @@ pt:
       name:
         :unique: 'Tag já cadastrada'
     refund_request:
-      # refund_request_association: 'Existem solicitações de reembolso associadas a esse fornecedor'
+      user:
+        not_owner: 'Não é o dono do rascunho'
+        not_admin: 'Não é um administrador'
+      status:
+        not_draft: 'Não é um rascunho'
+        not_requested: 'Não é um requisição de reembolso'
       name:
         :unique: 'Tag já cadastrada'

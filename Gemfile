@@ -46,6 +46,7 @@ gem 'dotenv-rails'
 
 gem 'dry-validation'
 gem 'u-case'
+gem 'active_model_serializers', '~> 0.10.15'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
