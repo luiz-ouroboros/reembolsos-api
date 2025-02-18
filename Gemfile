@@ -64,7 +64,7 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
-  gem 'rspec-rails', '~> 6.0'
+  gem 'rspec-rails', '~> 7.1'
   # gem 'rspec-sidekiq'
   gem 'factory_bot_rails'
   gem 'faker'
