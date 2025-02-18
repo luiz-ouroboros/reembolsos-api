@@ -45,6 +45,19 @@ RSpec.describe RefundRequestsController, type: :controller do
       expect(response.body).to be_json_as(pattern)
     end
 
+    context 'when supplier_id params is present' do
+      let!(:refund_request_unlisted) { create(:refund_request) }
+      it 'returns only refund requests having supplier_id' do
+        refund_request = create(:refund_request, supplier: create(:supplier))
+        refund_request_pattern[:id] = refund_request.id
+        pattern = { data: [refund_request_pattern] }
+
+        get :index, params: { supplier_id: refund_request.supplier_id }
+
+        expect(response.body).to be_json_as(pattern)
+      end
+    end
+
     context 'when search params is present' do
       let!(:refund_request_unlisted) { create(:refund_request) }
 
