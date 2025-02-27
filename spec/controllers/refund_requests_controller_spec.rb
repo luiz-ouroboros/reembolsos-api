@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe RefundRequestsController, type: :controller do
   let(:refund_request) { create(:refund_request) }
   let(:valid_attributes) { attributes_for(:refund_request) }
-  let(:pdf_file) { fixture_file_upload(Rails.root.join('spec/fixtures/files/sample.pdf'), 'application/pdf') }
-  let(:image_file) { fixture_file_upload(Rails.root.join('spec/fixtures/files/sample.jpeg'), 'image/jpeg') }
-  let(:valid_pdf_params) { { file_type: 'invoice', file: pdf_file } }
-  let(:valid_image_params) { { file_type: 'receipt', file: image_file } }
   let(:refund_request_pattern) {
     {
       id: Integer,
@@ -33,6 +29,25 @@ RSpec.describe RefundRequestsController, type: :controller do
       tags: [{ id: Integer, name: String }]
     }
   }
+
+  let(:pdf_blob) do
+    ActiveStorage::Blob.create_and_upload!(
+      io: File.open(Rails.root.join('spec/fixtures/files/sample.pdf')),
+      filename: 'sample.pdf',
+      content_type: 'application/pdf'
+    )
+  end
+
+  let(:image_blob) do
+    ActiveStorage::Blob.create_and_upload!(
+      io: File.open(Rails.root.join('spec/fixtures/files/sample.jpeg')),
+      filename: 'sample.jpeg',
+      content_type: 'image/jpeg'
+    )
+  end
+
+  let(:valid_pdf_params) { { file_type: 'invoice', file: pdf_blob.signed_id } }
+  let(:valid_image_params) { { file_type: 'receipt', file: image_blob.signed_id } }
 
   describe 'GET #index' do
     it 'returns a success response' do

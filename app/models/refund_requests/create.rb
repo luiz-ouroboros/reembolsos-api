@@ -4,7 +4,7 @@ class RefundRequests::Create < UseCase
   class UseContract < ContractScheme
     params do
       required(:file_type).filled(:string, included_in?: %w[invoice receipt])
-      required(:file).filled(Types::File)
+      required(:file).filled(:string)
     end
   end
 
@@ -30,26 +30,22 @@ class RefundRequests::Create < UseCase
   end
 
   def attach_file(refund_request:, params:, **)
-    file = params[:file]
+    file_param = params[:file]
 
-    return Failure(:missing_file) unless file
-
-    file_params = {
-      io: file.tempfile,
-      filename: file.original_filename,
-      content_type: file.content_type,
-    }
+    blob = ActiveStorage::Blob.find_signed!(file_param)
 
     case params[:file_type]
     when 'invoice'
-      refund_request.invoice.attach(file_params)
+      refund_request.invoice.attach(blob)
     when 'receipt'
-      refund_request.receipt.attach(file_params)
+      refund_request.receipt.attach(blob)
     else
       return Failure(:invalid_file_type)
     end
 
     Success(:attach_file_success, result: { refund_request: refund_request })
+  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+    Failure(:invalid_file_signature)
   end
 
   def create_log(refund_request:, params:, **)
